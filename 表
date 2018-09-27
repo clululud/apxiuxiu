@@ -1,0 +1,157 @@
+/*顺序表*/
+
+
+typedef struct
+{
+	int Data[MAXSIZE];
+	int last;                  //指向最后一个元素
+}List;
+
+
+
+List *MakeEmpty()              //初始化一个空线性表L
+{
+	List *PtrL;
+	PtrL = (List *)malloc(sizeof(List));
+	PtrL->last = -1;
+	return PtrL;
+}
+
+
+
+int Find(int X, List *PtrL)//在线性表L中查找X的第一次出现位置
+{
+	int i = 0;
+	while (i <= PtrL->last /*没找到*/&& PtrL->Data[i] != X/*找到了*/)
+		i++;
+	if (i > PtrL->last)
+		return -1;         //如果没找到，返回-1
+	else
+		return i;          //找到返回储存位置
+}
+
+
+
+void Insert(int X, int i, List *PtrL)//在位序i前插入一个新元素X
+{
+	/*先移动后插入*/
+	int j;
+	if (PtrL->last == MAXSIZE - 1)//判断表是否已满
+	{
+		printf("表满\n");   //表空间已满
+		return;
+	}
+	if (i<1 || i>PtrL->last + 2)  //检查插入位置的合法性
+	{
+		printf("位置不合法\n");   
+		return;
+	}
+
+	for (j = PtrL->last; j >= i - 1; j--)/*将i~n倒序后移*/
+		PtrL->Data[j + 1] = PtrL->Data[j];
+	PtrL->Data[i - 1] = X;
+	PtrL->last++;            //last 指向最后元素
+	return;
+}
+
+
+
+void Delete(int i, List *PtrL)         //删除指定位序i的元素
+{
+	/*先删除后移动*/
+	int j;
+	if (i<1 || i>PtrL->last + 1)        //检查空表以及删除位置的合法性
+	{
+		printf("不存在第%d个元素", i);
+		return;
+	}
+	for (j = i; j <= PtrL->last; j++)  //将i~n元素顺序前移
+		PtrL->Data[j - 1] = PtrL->Data[j]; //last指向 最后元素
+	PtrL->last--;
+	return;
+}
+
+
+
+/*链表*/
+typedef struct Node
+{
+	int Data;
+	struct Node *Next;
+}link_list;
+
+int Length(link_list *PtrL)  //求表长
+{
+	link_list *p = PtrL;
+	int j = 0;
+	while (p)
+	{
+		p = p->Next;
+		j++;
+	}
+	return j;
+}
+
+
+
+link_list *FindKth(int K, link_list *PtrL)//按位置查找
+{
+	link_list *p = PtrL;
+	int i = 1;
+
+	while (p != NULL && i < K)
+	{
+		p = p->Next;
+		i++;
+	}
+
+	if (i == K)
+		return p;      //找到返回指针
+	else
+		return NULL;
+}
+
+
+
+link_list *Find(int X, link_list *PtrL)//按值查找
+{
+	link_list *p = PtrL;
+
+	while (p != NULL && p->Data != X)
+		p = p->Next;
+	
+
+	return p;
+}
+
+
+/*插入*/
+//先构造一个新结点 用s指向 再找到链表的第i-1个结点 用p指向 
+//然后修改指针，插入结点(p之后插入)
+link_list *insert(int X,int i,link_list *PtrL)//
+{
+	link_list *p, *s;
+	if (i == 1)
+	{
+		s = (link_list*)malloc(sizeof(link_list));
+		s->Data = X;
+		s->Next = PtrL;
+		return s;
+	}
+	p = FindKth(i - 1, PtrL);
+	if (p == NULL)
+	{
+		printf("参数i错");
+		return NULL;
+	}
+	else
+	{
+		s = (link_list*)malloc(sizeof(link_list));
+		s->Data = X;
+		s->Next = p->Next;
+		p->Next = s;
+		return PtrL;
+	}
+}
+
+
