@@ -1,0 +1,195 @@
+typedef struct Node
+{
+	int Data;
+	struct Node *Next;
+}Node;
+//求表长
+void Length(Node *PtrL)
+{
+	Node *p = PtrL;
+	int j = 0;
+	while (p)
+	{
+		p = p->Next;
+		j++;
+	}printf("表长为%d\n", j-1);
+	return;
+}
+
+//初始化单链表
+Node* Link_listInit()
+{
+	Node *H;
+	H = (Node *)malloc(sizeof(Node));   //申请结点空间     
+	if (H == NULL)
+	{ //判断是否有足够的内存空间         
+		printf("申请内存空间失败\n");
+	}
+	H->Next = NULL;                  //将next设置为NULL,初始长度为0的单链表  	
+	H->Data = NULL;                  //头节点的data里不含数据 O.O
+	return H;
+}
+
+//带头节点
+//单链表的建立1，头插法建立单链表 
+Node* Link_ListCreatH(Node *L)
+{    
+	int  x = 0;                         //x为链表数据域中的数据    
+	printf("输入数据 -1结束\n");
+	while (x != -1)
+	{
+		scanf("%d", &x);
+		if (x != -1)
+		{
+			Node *p;
+			p = (Node *)malloc(sizeof(Node));             //申请新的结点        
+			p->Data = x;                                   //结点数据域赋值        
+			p->Next = L->Next;                             //将结点插入到表头L-->|2|-->|1|-->NULL        
+			L->Next = p;
+		}
+	}
+	return L;
+}
+//单链表的建立2，尾插法建立单链表 
+Node* link_listCreatT(Node *L)
+{
+	Node *r;
+	r = L;                          //r始终指向终端结点，开始时指向头结点     
+	int x = 0;                         //x为链表数据域中的数据    
+	printf("输入数据 -1结束\n");
+	while (x!=-1)
+	{
+		scanf("%d", &x);
+		if (x != -1)
+		{
+			Node *p;
+			p = (Node *)malloc(sizeof(Node));   //申请新的结点        
+			p->Data = x;                     //结点数据域赋值        
+			r->Next = p;                 //将结点插入到表头L-->|1|-->|2|-->NULL        
+			r = p;
+		}
+	}
+	r->Next = NULL;
+	return L;
+}
+
+//按位置查找
+Node* FindKth(int K, Node *PtrL)
+{
+	Node *p = PtrL;
+	int i = 0;
+
+	while (p != NULL && i < K)
+	{
+		p = p->Next;
+		i++;
+	}
+
+	if (i == K)
+		return p;      //找到返回指针
+	else
+	{
+		printf("我这没找到啊\n");
+		return NULL;
+	}
+}
+//按值查找
+Node* Find(int X, Node *PtrL)
+{
+	Node *p = PtrL;
+
+	while (p != NULL && p->Data != X)
+		p = p->Next;
+
+	return p;
+}
+
+/*插入*/
+Node* Insert(int X, int i, Node *PtrL)//在给定的位置i前插入数据X
+{
+	//先构造一个新结点 用s指向 再找到链表的第i-1个结点 用p指向 
+	//然后修改指针，插入结点(p之后插入)
+	Node *p = (Node*)malloc(sizeof(Node)), *s = (Node*)malloc(sizeof(Node));
+	if (i == 1)                   //要插入的位置为1的情况
+	{  
+		s->Data = X;
+		s->Next = PtrL->Next;
+		PtrL->Next = s;
+	
+		return PtrL;
+	}
+
+	p = FindKth(i - 1, PtrL);
+	
+	if (p != NULL)
+	{
+
+		if (p->Next == NULL)
+		{
+			printf("参数i错\n");
+			return NULL;
+		}
+		else
+		{
+
+			s = (Node*)malloc(sizeof(Node));
+			s->Data = X;
+			s->Next = p->Next;
+			p->Next = s;
+
+			return PtrL;
+		}
+	}
+	else
+	{
+		printf("位置错误\n");
+		return PtrL;
+	}
+}
+/*删除*/
+Node* Delete(int i, Node *Ptrl) //删除位置为i的数据
+{
+	Node *p, *s;
+	if (i == 1)                 //若删除的是表的第一个结点
+	{
+		s = Ptrl;               //s指向第1个结点
+		if (Ptrl != NULL)       //从链表中删除
+			Ptrl = Ptrl->Next;
+		else
+			return NULL;
+		free(s);                 //释放被删除结点
+		return Ptrl;
+	}
+	p = FindKth(i - 1, Ptrl);    //查找第i-1个结点
+	if (p == NULL)
+	{
+		printf("第%d个结点不存在", i - 1);
+		return NULL;
+	}
+	else if (p->Next == NULL)
+	{
+		printf("第%d个结点不存在", i);
+		return NULL;
+	}
+	else
+	{
+		s = p->Next;            //s指向第i个结点
+		p->Next = s->Next;      //从链表中删除
+		free(s);                //释放被删除结点
+		return Ptrl;
+	}
+}
+
+/*打印*/
+void printAll1(Node *L)
+{
+	Node *p = (Node *)malloc(sizeof(Node));
+	p = L;
+	while (p->Next != NULL)
+	{		
+		printf("%d  ", (p->Next)->Data);
+		p = p->Next;		
+	}
+	printf("\n");
+	return;
+}
