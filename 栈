@@ -35,7 +35,7 @@ void Pop(Stack *S)
 		free(FirstCell);
 	}
 }
-//清空
+//清空  
 void MakeEmpty(Stack *S)
 {
 	if (S == NULL)
