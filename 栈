@@ -1,0 +1,122 @@
+typedef struct Node
+{
+	int Data;
+	struct Node *Next;
+}Stack;
+
+//求栈长
+int Length(Node *PtrL)
+{
+	Node *p = PtrL;
+	int j = 0;
+	while (p)
+	{
+		p = p->Next;
+		j++;
+	}printf("表长为%d\n", j-1);
+	return j-1;
+}
+
+//判断是否为空栈
+int IsEmpty(Stack *S)
+{
+	return S->Next == NULL;//是空栈返回1 不是返回0
+}
+//Pop弹出栈顶元素
+void Pop(Stack *S)
+{
+	Stack *FirstCell = (Stack*)malloc(sizeof(Node));
+	if (IsEmpty(S))
+		printf("Empty Stack");
+	else
+	{
+		FirstCell = S->Next;
+		S->Next = S->Next->Next;
+		free(FirstCell);
+	}
+}
+//清空
+void MakeEmpty(Stack *S)
+{
+	if (S == NULL)
+		printf("Must use CreatStack first\n");
+	else
+		while (!IsEmpty(S))  //如果不是空栈则弹出栈内元素
+			Pop(S);
+}
+//创建一个空栈
+Stack *CreateStack(void)
+{
+	Stack *S = (Stack*)malloc(sizeof(struct Node));
+	if (S == NULL)
+	{
+		printf("Out of space!!!\n");
+		return NULL;
+	}
+	S->Next = NULL;
+	MakeEmpty(S);
+	return S;
+}
+//进栈操作
+void Push(int x, Stack *S)
+{
+	Stack *tmpcell = (Stack*)malloc(sizeof(Node));
+	if (tmpcell == NULL)
+		printf("Out of space!\n");
+	else
+	{
+		tmpcell->Data = x;
+		tmpcell->Next = S->Next;
+		S->Next = tmpcell;
+	}//头插 逆序
+}
+//返回栈顶元素
+int Top(Stack *S)
+{
+	if (!IsEmpty(S)) //若S不是空栈返回栈顶元素
+		return S->Next->Data;
+	else             //否则报错
+	{
+		printf("Empty stack\n");
+		return 0;
+	}
+}
+/*打印*/
+void printAll1(Node *L)
+{
+	Node *p = (Node *)malloc(sizeof(Node));
+	p = L;
+	while (p->Next != NULL)
+	{		
+		printf("%d  ", (p->Next)->Data);
+		p = p->Next;		
+	}
+	printf("\n");
+	return;
+}
+
+int main()
+{
+	int i = 0;
+	Stack *S = CreateStack();
+	MakeEmpty(S);
+	while (i != 9)
+	{
+		Push(i, S);
+		i++;
+	}
+	printAll1(S);
+
+	while (!IsEmpty(S))
+	{
+		printf("%d  ", Top(S));
+		Pop(S);
+	}printf("\n");
+	printf("%d\n", IsEmpty(S));
+	
+	system("pause");
+	return 0;
+}
+
+
+
