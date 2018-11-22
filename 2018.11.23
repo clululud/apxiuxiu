@@ -1,0 +1,57 @@
+// 1 单链表的头插法尾插法;
+// 2 tmpcell = (linklist*)malloc(sizeof(struct linklist));
+// 3 不要随便使用返回值(?);
+
+
+
+
+
+void createH(linklist *L, int N) //头插法
+{
+	int x;
+	linklist *tmpcell;
+	for (int i = 0; i < N; i++)
+	{
+		scanf("%d", &x);
+		tmpcell = (linklist*)malloc(sizeof(struct linklist));
+		tmpcell->data = x;
+		tmpcell->next = L->next;
+		L->next = tmpcell;
+	}
+	return;
+}
+
+
+
+void createT(linklist *L, int N) //尾插法
+{
+	linklist *s, *r;
+	int x;
+	r = L;//r始终指向尾结点，开始时头结点和尾结点是同一个
+	for (int i = 0; i < N; i++)
+	{
+		scanf("%d", &x);
+		s = (linklist *)malloc(sizeof(struct linklist));//创建数据结点
+		s->data = x;//数据域
+		r->next = s;//将s插入到r后
+		r = s;//使r指向尾结点
+	}
+	r->next = NULL;//尾指针指针域置空
+}
+
+
+
+void Print(linklist *L, int N)  //
+{
+	linklist *temp = L->next;
+	for (int i = 0; i < N; i++)
+	{
+		printf("%d  ", temp->data);
+		temp = temp->next;
+	}
+	free(temp);
+	printf("\n");
+}
+
+
+
