@@ -8,7 +8,7 @@ struct linklist
 	int data;
 	linklist *next;
 };
-void createH(linklist *L, int x) //Í·²å·¨
+void createH(linklist *L, int x) //å¤´æ’æ³•
 {
 	linklist *tmpcell;
 	tmpcell = (linklist*)malloc(sizeof(struct linklist));
@@ -30,23 +30,23 @@ void makelistH(linklist *L, int N)
 	return;
 }
 
-void createT(linklist *L, int N) //Î²²å·¨
+void createT(linklist *L, int N) //å°¾æ’æ³•
 {
-	linklist *s, *r;  //ÁÙÊ±Ö¸ÕëÓëÎ²Ö¸Õë
-	int x;            //Êı¾İ
-	r = L;//rÊ¼ÖÕÖ¸ÏòÎ²½áµã£¬¿ªÊ¼Ê±Í·½áµãºÍÎ²½áµãÊÇÍ¬Ò»¸ö
-	for (int i = 0; i < N; i++)   //Ñ­»·²åÈë
+	linklist *s, *r;  //ä¸´æ—¶æŒ‡é’ˆä¸å°¾æŒ‡é’ˆ
+	int x;            //æ•°æ®
+	r = L;//rå§‹ç»ˆæŒ‡å‘å°¾ç»“ç‚¹ï¼Œå¼€å§‹æ—¶å¤´ç»“ç‚¹å’Œå°¾ç»“ç‚¹æ˜¯åŒä¸€ä¸ª
+	for (int i = 0; i < N; i++)   //å¾ªç¯æ’å…¥
 	{
 		scanf("%d", &x);
-		s = (linklist *)malloc(sizeof(struct linklist));//´´½¨Êı¾İ½áµã
-		s->data = x;//Êı¾İÓò
-		r->next = s;//½«s²åÈëµ½rºó
-		r = s;//Ê¹rÖ¸ÏòÎ²½áµã
+		s = (linklist *)malloc(sizeof(struct linklist));//åˆ›å»ºæ•°æ®ç»“ç‚¹
+		s->data = x;//æ•°æ®åŸŸ
+		r->next = s;//å°†sæ’å…¥åˆ°rå
+		r = s;//ä½¿ræŒ‡å‘å°¾ç»“ç‚¹
 	}
-	r->next = NULL;//Î²Ö¸ÕëÖ¸ÕëÓòÖÃ¿Õ
+	r->next = NULL;//å°¾æŒ‡é’ˆæŒ‡é’ˆåŸŸç½®ç©º
 	return;
 }
-linklist *findlocation(int location, linklist *L) //²éÕÒÎ»ÖÃ
+linklist *findlocation(int location, linklist *L) //æŸ¥æ‰¾ä½ç½®
 {
 	linklist *tmp = L->next;
 	for (int i = 1; i != location; i++)
@@ -54,10 +54,10 @@ linklist *findlocation(int location, linklist *L) //²éÕÒÎ»ÖÃ
 	return tmp;
 }
 
-void Print(linklist *L)  //Êä³öÁ´±íÀïµÄÊı¾İ
+void Print(linklist *L)  //è¾“å‡ºé“¾è¡¨é‡Œçš„æ•°æ®
 {
-	linklist *temp = L->next;  //´ÓÍ·½ÚµãÖ®ºóÔªËØ¿ªÊ¼
-	while (temp)       //±éÀúËùÓĞ½áµã ¹¤×÷Ö¸Õë×îÖÕÖ¸Ïò¿É¿Ø·¶Î§Íâ
+	linklist *temp = L->next;  //ä»å¤´èŠ‚ç‚¹ä¹‹åå…ƒç´ å¼€å§‹
+	while (temp)       //éå†æ‰€æœ‰ç»“ç‚¹ å·¥ä½œæŒ‡é’ˆæœ€ç»ˆæŒ‡å‘å¯æ§èŒƒå›´å¤–
 	{
 		printf("%d ", temp->data);
 		temp = temp->next;
@@ -65,13 +65,13 @@ void Print(linklist *L)  //Êä³öÁ´±íÀïµÄÊı¾İ
 	printf("\n");
 	return;
 }
-void PrintLots(linklist *L, linklist *P, int Np)   //°´pÖĞÔªËØµÄÖµÊä³öLÖĞÎ»ÖÃÓëÖ®¶ÔÓ¦µÄÔªËØ
+void PrintLots(linklist *L, linklist *P, int Np)   //æŒ‰pä¸­å…ƒç´ çš„å€¼è¾“å‡ºLä¸­ä½ç½®ä¸ä¹‹å¯¹åº”çš„å…ƒç´ 
 {
 	int t = 0;
 	linklist *tL = (linklist*)malloc(sizeof(struct linklist));
 	linklist *tP = (linklist*)malloc(sizeof(struct linklist));
 	tL->next = NULL; tP->next = NULL;
-	tP = P->next;                        //£¡ÕâÀï³öÁËÎÊÌâ Á´±íP´øÍ·½Úµã tp = p£»tp->data = null
+	tP = P->next;                        //ï¼è¿™é‡Œå‡ºäº†é—®é¢˜ é“¾è¡¨På¸¦å¤´èŠ‚ç‚¹ tp = pï¼›tp->data = null
 	for (int i = 0; i < Np; i++)
 	{
 		t = tP->data;
@@ -82,38 +82,38 @@ void PrintLots(linklist *L, linklist *P, int Np)   //°´pÖĞÔªËØµÄÖµÊä³öLÖĞÎ»ÖÃÓëÖ
 	return;
 }
 
-linklist *intersection(linklist *L, linklist *P)   //ÓĞĞò±íL P½»¼¯  A¡ÉB
+linklist *intersection(linklist *L, linklist *P)   //æœ‰åºè¡¨L Päº¤é›†  Aâˆ©B
 {
 	
-	linklist *S = (linklist*)malloc(sizeof(struct linklist));  //×îÖÕ·µ»ØµÄĞÂÁ´±í
-	S->next = NULL;                                            //³õÊ¼»¯
-	L = L->next; P = P->next;//´ÓÍ·½ÚµãµÄÏÂÒ»Î»¿ªÊ¼
+	linklist *S = (linklist*)malloc(sizeof(struct linklist));  //æœ€ç»ˆè¿”å›çš„æ–°é“¾è¡¨
+	S->next = NULL;                                            //åˆå§‹åŒ–
+	L = L->next; P = P->next;//ä»å¤´èŠ‚ç‚¹çš„ä¸‹ä¸€ä½å¼€å§‹
 	linklist *tl = L;
-	while (tl)         //Ö±½Ó±éÀú±íLÓëP           
+	while (tl)         //ç›´æ¥éå†è¡¨Lä¸P           
 	{  
 		linklist *tp = P;
 		while (tp)
 		{ 
-			if (L->data == tp->data)            //ÕÒµ½ÁËÏàµÈµÄÔªËØ ·ÅÈëÁ´±íSÖĞ
-				createH(S, L->data);             //Í·²å·¨²åÈë	
+			if (L->data == tp->data)            //æ‰¾åˆ°äº†ç›¸ç­‰çš„å…ƒç´  æ”¾å…¥é“¾è¡¨Sä¸­
+				createH(S, L->data);             //å¤´æ’æ³•æ’å…¥	
 			tp = tp->next;
 		}
 		tl = tl->next;
 	}
-	return S;                      //Ê±¼ä¸´ÔÓ¶ÈO(N2)?
+	return S;                      //æ—¶é—´å¤æ‚åº¦O(N2)?
 }
-linklist *unionset(linklist *L, linklist *P)   //ÓĞĞò±íL P²¢¼¯
+linklist *unionset(linklist *L, linklist *P)   //æœ‰åºè¡¨L På¹¶é›†
 {
 	
 	linklist *S = (linklist*)malloc(sizeof(struct linklist));
 	S = L;
 	
 	linklist *tP = P->next;
-	while (tP)             //±éÀúP
+	while (tP)             //éå†P
 	{   
 		linklist *tL = L->next;
 		int flag = 0;
-		while (tL&&(!flag))         //±éÀúL
+		while (tL&&(!flag))         //éå†L
 		{
 			if (tP->data == tL->data)
 				flag = 1;
@@ -138,12 +138,12 @@ int main(void)
 	P = (linklist*)malloc(sizeof(struct linklist));
 	L->next = NULL; P->next = NULL;
 
-	printf("ÊäÈëL±í³¤:\n");
+	printf("è¾“å…¥Lè¡¨é•¿:\n");
 	scanf("%d", &Nl); 
-	makelistH(L, Nl);               //Î²²å·¨½¨Á¢Á´±íL
+	makelistH(L, Nl);               //å°¾æ’æ³•å»ºç«‹é“¾è¡¨L
 
 
-	printf("ÊäÈëP±í³¤:\n");
+	printf("è¾“å…¥Pè¡¨é•¿:\n");
 	scanf("%d", &Np);
 	createT(P, Np);
 
